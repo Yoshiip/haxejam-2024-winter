@@ -1,2 +1,5 @@
 .vscode/
 private/
+export/
+*.kra*
+*.png~
