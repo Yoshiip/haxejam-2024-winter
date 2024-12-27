@@ -93,12 +93,6 @@ class SewersState extends FlxState {
 		FlxSpriteUtil.fill(line, 0);
 
 		if (hook.state != AIM) {
-			trace("dessin..."); // var anchorX = (PLAYER_POINT.x + hook.x) / 2;
-			// var anchorY = (PLAYER_POINT.y + hook.y) / 2 + 50;
-			// FlxSpriteUtil.drawCurve(line, PLAYER_POINT.x, PLAYER_POINT.y, hook.x, hook.y, anchorX, anchorY, 0, {
-			// 	thickness: 2,
-			// 	color: FlxColor.WHITE,
-			// });
 			FlxSpriteUtil.drawLine(line, PLAYER_POINT.x, PLAYER_POINT.y, hook.x, hook.y, {
 				color: FlxColor.WHITE,
 				thickness: 2,

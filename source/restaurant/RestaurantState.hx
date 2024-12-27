@@ -47,6 +47,11 @@ class RestaurantState extends FlxState {
 
 		hud = new RestaurantHUD(this);
 		add(hud);
+		openSubState(new HelpSubState(() -> {
+			closeSubState();
+		},
+			"Bienvenue dans votre cuisine! Ici vous allez devoir préparer vos plats pour vos clients de la journée. Disposez vos ingrédients dans les cases, et en fonction de l'ordre dans lequel vous les mettez le résultat sera différent. Expérimentez!"));
+
 	}
 
 	private function addSlots(potX:Float, potY:Float) {
@@ -85,19 +90,23 @@ class RestaurantState extends FlxState {
 					hud.tooltip.showTooltip(itemsHovered[0]);
 				}
 			}, () -> {
-				if (dragging.item == item)
-					return;
-				if (itemsHovered.contains(item)) {
-					itemsHovered.remove(item);
-				}
-				if (itemsHovered.length == 0) {
-					hud.tooltip.hideTooltip();
-				} else {
-					hud.tooltip.showTooltip(itemsHovered[0]);
-				}
+				removeHovered(item);
 			});
 			ingredients.add(ingredient);
 			add(ingredient);
+		}
+	}
+
+	private function removeHovered(item:Item) {
+		if (dragging != null && dragging.item == item)
+			return;
+		if (itemsHovered.contains(item)) {
+			itemsHovered.remove(item);
+		}
+		if (itemsHovered.length == 0) {
+			hud.tooltip.hideTooltip();
+		} else {
+			hud.tooltip.showTooltip(itemsHovered[0]);
 		}
 	}
 
@@ -127,7 +136,9 @@ class RestaurantState extends FlxState {
 						recipeChanged();
 					}
 				});
+				final item = dragging.item;
 				dragging = null;
+				removeHovered(item);
 			}
 		} else {
 			ingredients.forEachAlive(function(ingredient:DraggeableIngredient) {

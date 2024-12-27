@@ -8,6 +8,7 @@ class GameData {
 	public var xpLeft:Int = 0;
 	public var inventory:Array<Item> = [];
 	public var discoveredItems:Array<ItemId> = [];
+	public var history:Array<ItemId> = [];
 	public var inventorySize:Int = 5;
 	public var taste:Int = 0;
 	public var toxicity:Int = 0;
