@@ -21,14 +21,12 @@ class RestaurantState extends FlxState {
 
 	public var taste:Int = 0;
 	public var tasteObjective:Int = 100;
-	public var toxicity:Int = 0;
 
 	override public function create() {
 		FlxG.camera.fade(FlxColor.BLACK, 0.33, true);
 		super.create();
 
 		taste = GameData.instance.taste;
-		toxicity = GameData.instance.toxicity;
 		tasteObjective = GameData.instance.TASTE_OBJECTIVE[GameData.instance.day];
 
 		var background = new FlxSprite(0, 0);
@@ -115,9 +113,7 @@ class RestaurantState extends FlxState {
 		slots.forEach((slot:Slot) -> slot.calculateValues());
 		slots.forEach((slot:Slot) -> slot.applyItemEffect());
 		taste = GameData.instance.taste;
-		toxicity = GameData.instance.toxicity;
-		slots.forEach((slot:Slot) -> taste += slot.values.taste);
-		slots.forEach((slot:Slot) -> toxicity += slot.values.toxicity);
+		slots.forEach((slot:Slot) -> taste += slot.taste);
 		hud.updateHUD();
 	}
 

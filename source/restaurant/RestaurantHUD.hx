@@ -20,7 +20,6 @@ class RestaurantHUD extends FlxGroup {
 	private var continueButton:Button;
 
 	private var tasteBar:CompleteBar;
-	private var toxicityBar:CompleteBar;
 
 	private var root:RestaurantState;
 
@@ -58,8 +57,6 @@ class RestaurantHUD extends FlxGroup {
 		tasteBar = new CompleteBar('Taste', 'Objective: ${root.tasteObjective}', centerX - width, centerY, width, 32, root, 'taste', 0.0, root.tasteObjective);
 		add(tasteBar);
 
-		toxicityBar = new CompleteBar('Toxicity', 'Keep under 100', centerX + spacing, centerY + 160, width, 32, root, 'toxicity', 0.0, 100.0);
-		add(toxicityBar);
 	}
 
 	public function updateHUD() {
@@ -69,7 +66,6 @@ class RestaurantHUD extends FlxGroup {
 				allInside = false;
 		});
 		continueButton.visible = allInside;
-		toxicityBar.visible = root.toxicity > 0;
 	}
 
 	private function continuePressed() {

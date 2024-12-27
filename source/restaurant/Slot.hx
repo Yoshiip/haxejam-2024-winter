@@ -19,10 +19,7 @@ class Slot extends FlxTypedGroup<FlxSprite> {
 	public var valueMultiplier:Float = 1.0;
 	public var valueBonus:Int = 0;
 
-	public var values = {
-		'taste': 0,
-		'toxicity': 0,
-	};
+	public var taste = 0;
 
 	public static inline final SLOT_SIZE:Int = 88;
 
@@ -147,48 +144,48 @@ class Slot extends FlxTypedGroup<FlxSprite> {
 	public function applyItemEffect() {
 		if (inside == null) {
 			this.valueText.visible = false;
-			this.values.taste = 0;
-			this.values.toxicity = 0;
+			this.taste = 0;
+			this.taste = 0;
 			return;
 		}
 		switch (inside.item.id) {
 			case UNKNOWN:
-				values.taste = 0;
+				taste = 0;
 			case COMMON_FISH:
-				values.taste = 10;
+				taste = 10;
 			case RARE_FISH:
-				values.taste = 20;
+				taste = 20;
 			case SALMON:
-				values.taste = 30;
+				taste = 30;
 			case KOI:
-				values.taste = 15;
+				taste = 15;
 			case CATFISH:
-				values.taste = 10;
+				taste = 10;
 			case CLOWNFISH:
-				values.taste = 10;
+				taste = 10;
 			case PUFFERFISH:
-				values.taste = 5;
+				taste = 5;
 			case GOLDFISH:
-				values.taste = 10;
+				taste = 10;
 			case PARSLEY:
-				values.taste = 5;
+				taste = 5;
 			case BANANA:
-				values.taste = -5;
+				taste = -5;
 			case CAN:
-				values.toxicity = 10;
+				taste = -10;
 			case METAL_PIECE:
-				values.toxicity = 20;
+				taste = -20;
 			case NUCLEAR_WASTE:
-				values.toxicity = 30;
+				taste = -30;
 		}
-		values.taste = Std.int((values.taste + valueBonus) * valueMultiplier);
+		taste = Std.int((taste + valueBonus) * valueMultiplier);
 		this.valueText.visible = true;
-		if (values.toxicity > 0) {
+		if (taste > 0) {
 			this.valueText.color = FlxColor.GREEN;
-			this.valueText.text = '${Std.string(values.toxicity)}';
+			this.valueText.text = '${Std.string(taste)}';
 		} else {
 			this.valueText.color = FlxColor.WHITE;
-			this.valueText.text = '${Std.string(values.taste)}';
+			this.valueText.text = '${Std.string(taste)}';
 		}
 	}
 }

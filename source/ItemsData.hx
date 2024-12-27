@@ -19,20 +19,21 @@ class ItemsData {
 
 	private function new() {
 		items = [];
-		items.push(new Item(NORMAL, COMMON_FISH, 'Common Fish', "Add 10 tastes to the soup.", [0], 1.0, 0));
-		items.push(new Item(NORMAL, RARE_FISH, 'Rare Fish', "Add 20 tastes to the soup.", [1], 1.2, 0));
-		items.push(new Item(NORMAL, SALMON, 'Salmon', "Add 30 tastes to the soup.", [2], 1.1, 0));
-		items.push(new Item(NORMAL, KOI, 'Koi', "Adds 15 taste, and 15 extra taste if added in an odd-numbered slot", [13], 1.0, 0));
-		items.push(new Item(NORMAL, GOLDFISH, 'Goldfish', "Adds 10 taste, and 20 extra taste if added in an even-numbered slot", [5], 1.0, 1));
-		items.push(new Item(SPECIAL, CATFISH, 'Catfish', "Add 10 taste and x2 to the next ingredient.", [6], 1.0, 1));
-		items.push(new Item(SPECIAL, PUFFERFISH, 'Pufferfish', "Add 5 tastes and x0.5 to the previous ingredient", [10], 1.0, 1));
-		items.push(new Item(SPECIAL, CLOWNFISH, 'Clownfish', "Add 10 tastes and cancel previous ingredient effect", [9], 1.0, 2));
-		items.push(new Item(SPECIAL, PARSLEY, 'Parsley', "Add 5 tastes, and 30 extra taste if it's the last ingredient in the recipe", [4], 0.8, 1));
-		items.push(new Item(TOXIC, BANANA, 'Banana Peel', "Remove 5 tastes from the soup.", [3], 1.0, 1));
-		// items.push(new Item(TOXIC, CAN, 'Can', "Add 10 of toxicity to the soup.", [12], 1.0, 1));
-		items.push(new Item(TOXIC, METAL_PIECE, 'Piece of Metal', "Add 20 of toxicity to the soup.", [14], 1.0, 1));
-		items.push(new Item(TOXIC, NUCLEAR_WASTE, 'Nuclear Waste', "Add 30 of toxicity to the soup.", [11], 1.0, 2));
+		items.push(new Item(NORMAL, COMMON_FISH, 'Common Fish', "Adds 10 taste to the soup.", [0], 1.0, 0));
+		items.push(new Item(NORMAL, RARE_FISH, 'Rare Fish', "Adds 20 taste to the soup.", [1], 1.2, 0));
+		items.push(new Item(NORMAL, SALMON, 'Salmon', "Adds 30 taste to the soup.", [2], 1.1, 0));
+		items.push(new Item(NORMAL, KOI, 'Koi', "Adds 15 taste, and 15 extra taste if added in an odd-numbered slot.", [13], 1.0, 0));
+		items.push(new Item(NORMAL, GOLDFISH, 'Goldfish', "Adds 10 taste, and 20 extra taste if added in an even-numbered slot.", [5], 1.0, 1));
+		items.push(new Item(SPECIAL, CATFISH, 'Catfish', "Adds 10 taste and doubles the effect of the next ingredient.", [6], 1.0, 1));
+		items.push(new Item(SPECIAL, PUFFERFISH, 'Pufferfish', "Adds 5 taste and halves the effect of the previous ingredient.", [10], 1.0, 1));
+		items.push(new Item(SPECIAL, CLOWNFISH, 'Clownfish', "Adds 10 taste and cancels the effect of the previous ingredient.", [9], 1.0, 2));
+		items.push(new Item(SPECIAL, PARSLEY, 'Parsley', "Adds 5 taste, and 30 extra taste if it's the last ingredient in the recipe.", [4], 0.8, 1));
+		items.push(new Item(TOXIC, BANANA, 'Banana Peel', "Removes 5 taste from the soup.", [3], 1.0, 1));
+		// items.push(new Item(TOXIC, CAN, 'Can', "Adds 10 toxicity to the soup.", [12], 1.0, 1));
+		items.push(new Item(TOXIC, METAL_PIECE, 'Piece of Metal', "Removes 20 taste from the soup.", [14], 1.0, 1));
+		items.push(new Item(TOXIC, NUCLEAR_WASTE, 'Nuclear Waste', "Removes 30 taste from the soup.", [11], 1.0, 2));
 	}
+
 
 	private static final MAX_CONSTRAINTS:Map<ItemId, Int> = [PARSLEY => 2, CATFISH => 2, NUCLEAR_WASTE => 2];
 

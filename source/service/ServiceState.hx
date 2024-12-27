@@ -33,9 +33,9 @@ class ServiceState extends FlxState {
 		for (i in 0...customersCount) {
 			final customer = new Customer(100 + i * 200, 200, (customer:Customer) -> {
 				switch (customer.reaction) {
-					case LOVE: {
-							GameData.instance.toxicity = Std.int(Math.max(GameData.instance.toxicity - 3, 0));
-						};
+					// case LOVE: {
+					// 		GameData.instance.toxicity = Std.int(Math.max(GameData.instance.toxicity - 3, 0));
+					// 	};
 					case LIKE: return;
 					case DEAD: GameData.instance.deaths++;
 					case _: return;
@@ -45,19 +45,6 @@ class ServiceState extends FlxState {
 			customer.setReaction(taste > objective * FlxG.random.float(0.8) ? LOVE : LIKE);
 			customers.add(customer);
 			add(customer);
-		}
-		var toxicity = GameData.instance.toxicity;
-		if (toxicity >= 100) {
-			customers.getRandom().setReaction(DEAD);
-		}
-		if (toxicity >= 125) {
-			customers.getRandom().setReaction(DEAD);
-		}
-		if (toxicity >= 150) {
-			customers.getRandom().setReaction(DEAD);
-		}
-		if (toxicity >= 200) {
-			customers.getRandom().setReaction(DEAD);
 		}
 
 		add(header);

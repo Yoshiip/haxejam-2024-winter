@@ -11,7 +11,6 @@ class GameData {
 	public var history:Array<ItemId> = [];
 	public var inventorySize:Int = 5;
 	public var taste:Int = 0;
-	public var toxicity:Int = 0;
 	public var deaths:Int = 0;
 	public var maxDeaths:Int = 3;
 
@@ -29,7 +28,6 @@ class GameData {
 		inventory = [];
 		inventorySize = 5;
 		taste = 0;
-		toxicity = 0;
 	}
 
 	private function new() {
