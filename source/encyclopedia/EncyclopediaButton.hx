@@ -10,6 +10,6 @@ class EncyclopediaButton extends Button {
 			state.openSubState(new EncyclopediaState(() -> {
 				state.closeSubState();
 			}));
-		}, -1, FlxG.height - 80);
+		}, -1, FlxG.height - 28);
 	}
 }

@@ -31,7 +31,8 @@
 
 	<set name="BUILD_DIR" value="export" />
 	<source path="source"  />
-	<assets path="assets" exclude="*.kra*" />
+	<!-- krita files and autosave files -->
+	<assets path="assets" exclude="*.kra*|*.*~" />
 	<assets path="assets/fonts" rename="fonts"/>
 
 	<!-- _______________________________ Libraries ______________________________ -->

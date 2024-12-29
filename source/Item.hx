@@ -6,16 +6,16 @@ class Item {
 	public var name:String;
 	public var description:String;
 	public var animation:Array<Int>;
-	public var rarity:Float = 0;
+	public var baseTaste:Int = 0;
 	public var minDay:Int = 0;
 
-	public function new(type:ItemType, id:ItemId, name:String, description:String, animation:Array<Int>, rarity:Float = 1.0, minDay:Int = 0) {
+	public function new(type:ItemType, id:ItemId, name:String, description:String, animation:Array<Int>, baseTaste:Int = 10, minDay:Int = 0) {
 		this.type = type;
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.animation = animation;
-		this.rarity = rarity;
+		this.baseTaste = baseTaste;
 		this.minDay = minDay;
 	}
 }
@@ -36,6 +36,9 @@ enum ItemId {
 	PUFFERFISH;
 	CLOWNFISH;
 	PARSLEY;
+	PHANTOMFISH;
+	TRASHFISH;
+	RAINBOWFISH;
 	BANANA;
 	CAN;
 	GOLDFISH;

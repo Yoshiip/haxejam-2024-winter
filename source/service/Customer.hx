@@ -3,30 +3,27 @@ package service;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup;
-import ui.Label;
-
-enum CustomerReaction {
-	LOVE;
-	LIKE;
-	DEAD;
-}
+import flixel.tweens.FlxTween;
 
 class Customer extends FlxGroup {
-	private var raccoon:FlxSprite;
-	private var sign:FlxSprite;
+	public var raccoon:FlxSprite;
+	public var sign:FlxSprite;
 
-	public var reaction:CustomerReaction = LIKE;
+	public var like = false;
+	public var love = false;
+	public var revealed = false;
 
-	private var onReveal:Customer->Void;
+	private var onClick:Customer->Void;
 
-	public static inline final SCALE:Float = 0.6;
+	public static inline final SCALE:Float = 1.0;
 
-	public function new(x:Float, y:Float, onReveal:Customer->Void) {
+	public function new(x:Float, y:Float, onClick:Customer->Void) {
 		super();
-		this.onReveal = onReveal;
+		this.onClick = onClick;
 
 		y += FlxG.random.float(0, 32);
-		raccoon = new FlxSprite(x, y);
+		raccoon = new FlxSprite(x + 200, y);
+		raccoon.alpha = 0.0;
 		raccoon.loadGraphic('assets/images/customer.png');
 		raccoon.scale.set(SCALE, SCALE);
 		add(raccoon);
@@ -36,26 +33,28 @@ class Customer extends FlxGroup {
 		sign.loadGraphic(AssetPaths.ui__png, true, 128, 128);
 		sign.visible = false;
 		add(sign);
+		FlxTween.tween(raccoon, {
+			x: x,
+			alpha: 1.0,
+		}, 0.8);
 	}
 
-	public function setReaction(newReaction:CustomerReaction) {
-		this.reaction = newReaction;
+	public function setLike(like:Bool) {
+		this.like = like;
 		sign.animation.destroyAnimations();
-		sign.animation.add('default', [newReaction == LIKE ? 0 : newReaction == LOVE ? 1 : 2]);
+		sign.animation.add('default', [love ? 2 : like ? 1 : 0]);
 		sign.animation.play('default');
 	}
 
 	private var total:Float = 0.0;
-	private var revealed = false;
 
 	override public function update(elapsed:Float) {
 		super.update(elapsed);
 		total += elapsed;
 		raccoon.scale.set(SCALE, SCALE + Math.cos(total * 4.0) * 0.05);
-		if (FlxG.mouse.justPressed && raccoon.overlapsPoint(FlxG.mouse.getPosition()) && !revealed) {
+		if (FlxG.mouse.justReleased && raccoon.overlapsPoint(FlxG.mouse.getPosition())) {
 			sign.visible = true;
-			revealed = true;
-			onReveal(this);
+			onClick(this);
 		}
 	}
 }

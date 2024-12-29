@@ -34,8 +34,10 @@ class DraggeableIngredient extends FlxSprite {
 		if (overlapsPoint(FlxG.mouse.getPosition())) {
 			if (!hovered) {
 				hovered = true;
-				if (onMouseOver != null)
+				if (onMouseOver != null) {
+					FlxG.sound.play('assets/sounds/hover.wav', 0.05);
 					onMouseOver();
+				}
 			}
 			scale.set(1.0 + Math.cos(total * 4.0) * 0.2, 1.0 + Math.sin(total * 4.0) * 0.2);
 		} else if (hovered) {

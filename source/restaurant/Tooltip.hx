@@ -9,7 +9,7 @@ import flixel.util.FlxColor;
 import flixel.util.FlxSpriteUtil;
 import ui.Label;
 
-class Tooltip extends SuperGroup<FlxSprite> {
+class Tooltip extends FlxTypedGroup<FlxSprite> {
 	var background:FlxSprite;
 	var name:FlxText;
 	var description:FlxText;

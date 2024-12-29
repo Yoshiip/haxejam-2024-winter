@@ -19,6 +19,7 @@ class RestaurantHUD extends FlxGroup {
 	private var playButton:Button;
 	private var continueButton:Button;
 
+	private var tasteLabel:Label;
 	private var tasteBar:CompleteBar;
 
 	private var root:RestaurantState;
@@ -27,19 +28,15 @@ class RestaurantHUD extends FlxGroup {
 		super();
 		this.root = root;
 
-		addBars();
+		tasteBar = new CompleteBar('Taste', 'Objective: ${root.tasteObjective}', -1, 72, 200, 32, root, 'taste', 0.0, root.tasteObjective);
+		add(tasteBar);
+
+		tasteLabel = new Label(-1, 96, '');
+		add(tasteLabel);
 
 		continueButton = new Button("Continue", continuePressed, -1, 400, 200, 32);
 		continueButton.visible = false;
 		add(continueButton);
-
-		final recipeText = new Label(0, 120, 'Recipe', 28);
-		recipeText.screenCenter(X);
-		add(recipeText);
-
-		final recipeHintText = new Label(0, 160, 'Choose the order in which you put your ingredients in the soup!');
-		recipeHintText.screenCenter(X);
-		add(recipeHintText);
 
 		tooltip = new Tooltip();
 		root.add(tooltip);
@@ -49,15 +46,6 @@ class RestaurantHUD extends FlxGroup {
 		add(new Header(root, 'restaurant'));
 	}
 
-	private function addBars() {
-		final centerX = FlxG.width / 2;
-		final centerY = FlxG.height / 2;
-		final spacing = 64;
-		final width = 200;
-		tasteBar = new CompleteBar('Taste', 'Objective: ${root.tasteObjective}', centerX - width, centerY, width, 32, root, 'taste', 0.0, root.tasteObjective);
-		add(tasteBar);
-
-	}
 
 	public function updateHUD() {
 		var allInside = true;
@@ -66,9 +54,16 @@ class RestaurantHUD extends FlxGroup {
 				allInside = false;
 		});
 		continueButton.visible = allInside;
+		tasteLabel.text = '${root.taste}';
 	}
 
+
 	private function continuePressed() {
+		GameData.instance.taste = root.taste;
+		root.slots.forEach((slot:Slot) -> {
+			if (slot.inside != null)
+				GameData.instance.history.push(slot.inside.item.id);
+		});
 		Utils.switchStateTo(new ServiceState());
 	}
 }

@@ -22,6 +22,8 @@ class RestaurantState extends FlxState {
 	public var taste:Int = 0;
 	public var tasteObjective:Int = 100;
 
+	private static final MESSAGE = "Welcome to your kitchen!\nHere you'll have to prepare your dishes for the day's customers.\nArrange your ingredients in the boxes and depending\non the order in which you put them the result will be different.\n\nExperiment!";
+
 	override public function create() {
 		FlxG.camera.fade(FlxColor.BLACK, 0.33, true);
 		super.create();
@@ -35,38 +37,39 @@ class RestaurantState extends FlxState {
 		background.scale.set(0.666, 0.666);
 		add(background);
 
-		FlxG.sound.playMusic(AssetPaths.cooking__mp3);
+		FlxG.sound.playMusic(AssetPaths.cooking__mp3, 0.5);
 
-		pot = new CookingPot(FlxG.width / 2, FlxG.height / 2 - 32, 0.5);
+		final potX = FlxG.width / 2;
+		final potY = FlxG.height / 2 + 200;
+		pot = new CookingPot(potX - 150, potY - 100);
 		add(pot);
 
-		this.addSlots(pot.x, pot.y);
+		this.addSlots();
 		this.addIngredients();
 
 		hud = new RestaurantHUD(this);
 		add(hud);
-		openSubState(new HelpSubState(() -> {
-			closeSubState();
-		},
-			"Bienvenue dans votre cuisine! Ici vous allez devoir préparer vos plats pour vos clients de la journée. Disposez vos ingrédients dans les cases, et en fonction de l'ordre dans lequel vous les mettez le résultat sera différent. Expérimentez!"));
+		if (GameData.instance.day == 0)
+			openSubState(new HelpSubState(closeSubState, MESSAGE));
 
 	}
 
-	private function addSlots(potX:Float, potY:Float) {
+	private function addSlots() {
 		slots = new FlxTypedGroup<Slot>();
 		final slotsCount = GameData.instance.inventorySize;
-		final radius = slotsCount * 10 + 100;
-
+		final width = (Slot.SLOT_SIZE * 1.25);
+		final totalWidth = width * slotsCount;
+		final startX = (FlxG.width - totalWidth) / 2;
+	
 		for (i in 0...slotsCount) {
-			var angle = (Math.PI * 2 / (slotsCount + 1)) * i - Math.PI / 2;
-			var slotX = potX + Math.cos(angle) * radius - Slot.SLOT_SIZE / 2;
-			var slotY = potY + Math.sin(angle) * radius - Slot.SLOT_SIZE / 2;
-
-			var slot = new Slot(this, slotX, slotY, i);
+			var slotX = startX + i * width;
+	
+			var slot = new Slot(this, slotX, 220, i);
 			slots.add(slot);
 			add(slot);
 		}
 	}
+
 
 	private final itemsHovered:Array<Item> = [];
 
@@ -109,9 +112,9 @@ class RestaurantState extends FlxState {
 	}
 
 	private function recipeChanged() {
-		slots.forEach((slot:Slot) -> slot.clearMultipliers());
-		slots.forEach((slot:Slot) -> slot.calculateValues());
-		slots.forEach((slot:Slot) -> slot.applyItemEffect());
+		slots.forEach((slot:Slot) -> slot.reset());
+		slots.forEach((slot:Slot) -> slot.applyInsideEffect());
+		slots.forEach((slot:Slot) -> slot.calculateFinalValue());
 		taste = GameData.instance.taste;
 		slots.forEach((slot:Slot) -> taste += slot.taste);
 		hud.updateHUD();

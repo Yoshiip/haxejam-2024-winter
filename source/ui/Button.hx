@@ -7,7 +7,7 @@ import flixel.util.FlxColor;
 import flixel.util.FlxSpriteUtil;
 
 class Button extends FlxTypedGroup<FlxSprite> {
-	var background:FlxSprite;
+	public var background:FlxSprite;
 	var label:Label;
 
 	public var disabled = false;
@@ -47,7 +47,7 @@ class Button extends FlxTypedGroup<FlxSprite> {
 	override public function update(elapsed:Float) {
 		super.update(elapsed);
 
-		if (background.overlapsPoint(FlxG.mouse.getPosition())) {
+		if (visible && background.overlapsPoint(FlxG.mouse.getPosition())) {
 			background.alpha = 0.5;
 			label.alpha = 0.8 + Math.cos(total) * 0.2;
 			if (FlxG.mouse.justPressed)
@@ -57,8 +57,10 @@ class Button extends FlxTypedGroup<FlxSprite> {
 			}
 			if (FlxG.mouse.justReleased && startedPressOnButton) {
 				startedPressOnButton = false;
-				if (!disabled)
+				if (!disabled) {
+					FlxG.sound.play('assets/sounds/hover.wav', 0.2);
 					onClick();
+				}
 			}
 		} else {
 			background.alpha = 0.3;

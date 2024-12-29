@@ -10,20 +10,20 @@ import ui.Header;
 import ui.Label;
 
 class SewersHUD extends FlxGroup {
-	private var inventoryText:Label;
 	private var continueButton:Button;
 	private var shootBar:CompleteBar;
 	private var objectiveLabel:Label;
 	private var root:SewersState;
+	private var header:Header;
+
+	public var encyclopediaButton:Button;
 
 	public function new(root:SewersState) {
 		super();
 		this.root = root;
+		header = new Header(root, 'sewers');
+		add(header);
 
-		add(new Header(root, 'sewers'));
-
-		inventoryText = new Label(16, 2, "");
-		add(inventoryText);
 
 		objectiveLabel = new Label(0, 40, "Catch 5 more items to continue");
 		objectiveLabel.screenCenter(X);
@@ -36,7 +36,8 @@ class SewersHUD extends FlxGroup {
 		shootBar = new CompleteBar('Strength', 'Click to release', -1, 64, 200, 32, root, 'shootStrength', 0.0, 1.0, false);
 		add(shootBar);
 
-		add(new EncyclopediaButton(root));
+		encyclopediaButton = new EncyclopediaButton(root);
+		add(encyclopediaButton);
 	}
 
 	private function left() {
@@ -44,12 +45,12 @@ class SewersHUD extends FlxGroup {
 	}
 
 	public function updateHUD() {
-		inventoryText.text = '${GameData.instance.inventory.length}/${GameData.instance.inventorySize}';
 		objectiveLabel.text = root.isDone() ? "You've done enough fishing for today" : 'Catch ${left()} more items to continue';
 		objectiveLabel.screenCenter(X);
 
 		continueButton.visible = root.isDone();
 		shootBar.visible = root.hook.state == AIM && !root.isDone();
+		header.updateHeader();
 	}
 
 	public function calculateRecipe() {}

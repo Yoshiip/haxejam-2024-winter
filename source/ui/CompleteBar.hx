@@ -12,7 +12,7 @@ class CompleteBar extends FlxTypedGroup<FlxSprite> {
 	public var valueLabel:Label;
 
 	public function new(title:String, subtext:String, x:Float = -1, y:Float = -1, width:Int = 200, height:Int = 24, ?parentRef:Dynamic, variable:String = '',
-			min:Float = 0.0, max:Float = 1.0, ?showValue:Bool = true) {
+			min:Float = 0.0, max:Float = 1.0, ?showValue:Bool = false) {
 		super(4);
 		bar = new FlxBar(x, y + 28, LEFT_TO_RIGHT, width, height, parentRef, variable, min, max, true);
 		add(bar);
@@ -50,10 +50,13 @@ class CompleteBar extends FlxTypedGroup<FlxSprite> {
 
 		if (y == -1) {
 			bar.screenCenter(Y);
+			bar.y += 28;
 			titleLabel.screenCenter(Y);
 			subtextLabel.screenCenter(Y);
+			subtextLabel.y += height + 26;
 		}
 	}
+
 
 	override public function update(elapsed:Float) {
 		super.update(elapsed);

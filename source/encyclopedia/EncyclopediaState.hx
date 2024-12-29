@@ -39,7 +39,7 @@ class EncyclopediaState extends FlxSubState {
 		for (item in ItemsData.instance.items) {
 			final discovered = GameData.instance.discoveredItems.contains(item.id);
 			final finalItem = discovered ? item : ItemsData.instance.unknownItem;
-			var ingredient = new DraggeableIngredient(finalItem, 100 + (i % 4) * 300, 100 + Math.floor(i / 4) * 180, () -> {
+			var ingredient = new DraggeableIngredient(finalItem, 100 + (i % 4) * 300, 100 + Math.floor(i / 4) * 120, () -> {
 				tooltip.showTooltip(finalItem);
 			}, () -> {
 				tooltip.hideTooltip();

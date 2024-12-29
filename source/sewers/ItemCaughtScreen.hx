@@ -34,23 +34,24 @@ class ItemCaughtScreen extends FlxTypedGroup<FlxSprite> {
 		itemSprite.screenCenter();
 		add(itemSprite);
 
-		itemNameLabel = new Label(0, centerY + 32, '', 48);
-		itemNameLabel.screenCenter(X);
+		itemNameLabel = new Label(-1, centerY + 32, '', 48);
 		itemNameLabel.autoSize = false;
+		itemNameLabel.alignment = CENTER;
 		itemNameLabel.fieldWidth = 480;
 		add(itemNameLabel);
 
-		itemDescriptionLabel = new Label(0, centerY + 96, '', 24);
-		itemDescriptionLabel.screenCenter(X);
+		itemDescriptionLabel = new Label(-1, centerY + 96, '', 24);
+		itemDescriptionLabel.autoSize = false;
+		itemDescriptionLabel.alignment = CENTER;
+		itemDescriptionLabel.fieldWidth = 400;
+		itemDescriptionLabel.alpha = 0.8;
 		add(itemDescriptionLabel);
 
-		topLabel = new Label(0, 64, 'Congratulations!', 24);
-		topLabel.screenCenter(X);
+		topLabel = new Label(-1, 64, 'Congratulations!', 24);
 		add(topLabel);
 
-		closeLabel = new Label(0, FlxG.height - 100, '(click to close)');
+		closeLabel = new Label(-1, FlxG.height - 100, '(click to close)');
 		closeLabel.alpha = 0.5;
-		closeLabel.screenCenter(X);
 		add(closeLabel);
 
 		visible = false;
@@ -73,8 +74,10 @@ class ItemCaughtScreen extends FlxTypedGroup<FlxSprite> {
 		root.hasFocus = false;
 
 		itemNameLabel.screenCenter(X);
+		itemDescriptionLabel.screenCenter(X);
 		topLabel.screenCenter(X);
 
+		closing = false;
 		visible = true;
 		FlxTween.num(0, 1, .66, {ease: FlxEase.circOut}, updateAlpha);
 	}

@@ -11,7 +11,7 @@ enum HookState {
 }
 
 class Hook extends FlxSprite {
-	public inline static final MAX_SPEED = 650;
+	public inline static final MAX_SPEED = 700;
 
 	var root:SewersState;
 
@@ -23,11 +23,13 @@ class Hook extends FlxSprite {
 		super(0, 240);
 		this.root = root;
 		state = AIM;
+		loadGraphic('assets/images/hook.png');
 		scale.set(0.5, 0.5);
 		updateHitbox();
 
-		loadGraphic('assets/images/hook.png');
 	}
+
+	private var inWater:Bool = false;
 
 	private var total:Float;
 
@@ -36,7 +38,14 @@ class Hook extends FlxSprite {
 		super.update(elapsed);
 		visible = state != AIM;
 
+		if (state == AIM)
+			inWater = false;
+
 		if (y > 200) {
+			if (!inWater && visible) {
+				FlxG.sound.play('assets/sounds/splash.wav', 0.5);
+				inWater = true;
+			}
 			this.velocity.x *= 0.97;
 			this.acceleration.y = 40;
 			maxVelocity.set(MAX_SPEED, 80);
@@ -47,9 +56,11 @@ class Hook extends FlxSprite {
 		}
 		if (y > FlxG.height) {
 			state = AIM;
+			root.hud.updateHUD();
 		}
-		if (state == SHOOT)
+		if (state == SHOOT) {
 			FlxG.overlap(this, root.items, hookTouchedItem);
+		}
 	}
 
 	function hookTouchedItem(hook:Hook, item:FloatingItem) {

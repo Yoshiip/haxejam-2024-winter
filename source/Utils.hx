@@ -23,4 +23,12 @@ class Utils {
 	// 	sprite.setX(FlxMath.lerp(sprite.getX(), newPosition.x, delta * 10.0));
 	// 	sprite.setY(FlxMath.lerp(sprite.getY(), newPosition.y, delta * 10.0));
 	// }
+	public static function shuffle<T>(arr:Array<T>):Void {
+		for (i in 0...arr.length) {
+			var j = Std.random(arr.length);
+			var temp = arr[i];
+			arr[i] = arr[j];
+			arr[j] = temp;
+		}
+	}
 }
